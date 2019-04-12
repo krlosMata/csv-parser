@@ -13,13 +13,17 @@ def arrayToFloat(array):
     return arrayFloats
   return array
 
-def convert(matrix):
+## Filter matrix getting rid of empty values and skip columns
+## marked on skipCol array
+def convert(matrix, skipCol):
   outputTotal = []
   for element in matrix:
     outputRow = []
+    i = 0
     for x in element:
-      if x.ctype != 0:
+      if (i not in skipCol) and x.ctype != 0:
         outputRow.append(x.value)
+      i += 1
     outputTotal.append(outputRow)
   return outputTotal
 

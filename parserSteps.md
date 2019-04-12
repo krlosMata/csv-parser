@@ -8,4 +8,9 @@
 - [x] Normalization time
 - [x] Save file with all sub-matrixsd
 - [x] Interpolation and get X / Y vectors interpolated
-- [x]   
+---
+---
+- [ ] If a columns is empty, I skipped
+- [ ] Variables should be same length among products
+- [ ] Matrix belongs to one specific time: time 0 --> Matrix of prosucts and variables
+- [ ] Get index of vectors than can be interpolated and then loop through it

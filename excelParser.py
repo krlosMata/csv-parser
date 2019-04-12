@@ -1,7 +1,9 @@
 import sys, json, time, os
 import xlrd, xlwt
+import numpy as np
 from customApi import General, chemistryUtils
 from pathlib import Path
+
 ###########################################
 ###################ARGS####################
 ###########################################
@@ -30,7 +32,6 @@ headers = fullSheet.row(0)
 columnProduct = fullSheet.col(2)
 columnProduct.pop(0)
 
-
 ###########################################
 #########GET MATRIX EACH PRODUCT###########
 ###########################################
@@ -48,7 +49,7 @@ for colName in columnProduct:
   if len(str(colName.value)) < 10 or fullSheet.row(index)[6].value == 0 :
     index += 1
     continue  
-  # If the preduct is new, save product name
+  # If the product is new, save product name
   if productName == '':
     productName = colName.value
   # Add entire row to product
@@ -60,8 +61,11 @@ for colName in columnProduct:
     productName = colName.value
     matrixProduct = []
 
+## Columns to be skipped
+skipCols = [1, 2, 3, 4, 5, 25, 26, 27, 28, 29]
+
 ## Save json for each product
 for product in arrayMatrix:
-  newMatrix = chemistryUtils.convert(arrayMatrix[product])
-  nameFile = currentPath.joinpath(str(product) + '.json')
+  newMatrix = chemistryUtils.convert(arrayMatrix[product], skipCols)
+  nameFile = currentPath.joinpath('products').joinpath(str(product) + '.json')
   General.write_json(newMatrix,nameFile)

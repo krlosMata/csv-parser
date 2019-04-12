@@ -1,6 +1,7 @@
 # Custom
 .vscode
 products
+productsParsed
 *.xlsx
 
 # Byte-compiled / optimized / DLL files
