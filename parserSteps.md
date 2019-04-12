@@ -14,3 +14,4 @@
 - [ ] Variables should be same length among products
 - [ ] Matrix belongs to one specific time: time 0 --> Matrix of prosucts and variables
 - [ ] Get index of vectors than can be interpolated and then loop through it
+- [ ] Vector X time --> Number if samples, incremental index by 1 --> then normalize

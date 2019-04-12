@@ -40,14 +40,13 @@ for product in folderObject.iterdir():
     matrix = General.read_json(product)
     colX = chemistryUtils.getColumn(matrix, 0)
     colX = chemistryUtils.arrayToFloat(colX)
-    normX = chemistryUtils.normalizationVector(colX)
-    ## Skip X vector
+    normX = chemistryUtils.normalizationVector(colX) # Normalize X vector of time
+    ## Calculate all Yvec interpolated ( Skip X vector )
     for i in range(1, len(matrix[0])):
-      # Filter to skip columns
-      colY = chemistryUtils.getColumn(matrix, 7)
+      colY = chemistryUtils.getColumn(matrix, i)
       colY = chemistryUtils.arrayToFloat(colY)
-      tabla = chemistryUtils.getTabla(normX, colY)
-      finalX, finalY = chemistryUtils.interpolation(tabla, 2)
+      tabla = chemistryUtils.getTabla(normX, colY) # Get interpolation table
+      finalX, finalY = chemistryUtils.interpolation(tabla, 2) # Get Yvec interpolated from Xvec points
       ArrayYVectors.append(finalY)
     # Build matrix final for an specific product 
     for i in range(0, len(finalX)):
@@ -55,7 +54,10 @@ for product in folderObject.iterdir():
       RowFinalMatrix.append(finalX[i])
       for vecY in ArrayYVectors:
         RowFinalMatrix.append(vecY[i])
-      continue
+      FinalMatrix.append(RowFinalMatrix)
+
+test = 1
+test = test + 1      
 #TODO: Extraer matriz full normalizada a partir de: VecX y ArraydeVecY 
 
 ## Example getting one column X and Y
