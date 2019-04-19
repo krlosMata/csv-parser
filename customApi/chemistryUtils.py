@@ -47,6 +47,12 @@ def normalizationVector(inputVec):
     output.append(float(element/normElem))
   return output
 
+def normVecSamples(inputVec):
+  baseVec = range(0,len(inputVec))
+  normElem = baseVec[len(baseVec)-1]
+  output = [float(element/normElem) for element in baseVec]
+  return output
+
 def getTramo(x, tabla):
   for i in range(len(tabla)-1):
     if (x >= tabla[i]['init']) and (x <= tabla[i+1]['init']):

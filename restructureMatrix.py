@@ -34,31 +34,28 @@ if len(os.listdir(folderPath)) == 0:
 ###########################################
 folderObject = Path(folderPath)
 destinyObject = Path(destinyPath)
-## For each product
+numMatrix = 0
+## Get number of total matrix. We take length of X vector
 for product in folderObject.iterdir():
-  ## get product name
   pr = (product.name).replace('.json','')
-  FinalMatrix = []
-  ArrayYVectors = []
   matrix = General.read_json(product)
   colX = chemistryUtils.getColumn(matrix, 0)
-  colX = chemistryUtils.arrayToFloat(colX)
-  normX = chemistryUtils.normVecSamples(colX) # Normalize X vector of time
-  ## Calculate all Yvec interpolated ( Skip X vector )
-  for i in range(1, len(matrix[0])):
-    colY = chemistryUtils.getColumn(matrix, i)
-    colY = chemistryUtils.arrayToFloat(colY)
-    tabla = chemistryUtils.getTabla(normX, colY) # Get interpolation table
-    finalX, finalY = chemistryUtils.interpolation(tabla, 1) # Get Yvec interpolated from Xvec points
-    ArrayYVectors.append(finalY)
-  # Build matrix final for an specific product 
-  for i in range(0, len(finalX)):
-    RowFinalMatrix = []
-    RowFinalMatrix.append(finalX[i])
-    for vecY in ArrayYVectors:
-      RowFinalMatrix.append(vecY[i])
-    FinalMatrix.append(RowFinalMatrix)
-  nameFile = destinyObject.joinpath(str(pr) + '-final.json')
-  General.write_json(FinalMatrix,nameFile)
+  numMatrix = len(colX)-1
+  break
 
-print("Matrix interpolated correctly")
+ultraMatrix = []
+
+for index in range(0, numMatrix): ## For each timestamp, build a matrix
+  unitMatrix = []
+  for product in folderObject.iterdir(): ## For each product
+    productMatrix = General.read_json(product)
+    rowUnitMatrix = []
+    for i in range(1, len(productMatrix[0])): ## For each variable
+      colY = chemistryUtils.getColumn(productMatrix, i)
+      rowUnitMatrix.append(colY[index])
+    unitMatrix.append(rowUnitMatrix)
+  ultraMatrix.append(unitMatrix)
+
+nameFile = destinyObject.joinpath('ultraMatrix.json')
+General.write_json(ultraMatrix,nameFile)
+print("Final matrix done !!")

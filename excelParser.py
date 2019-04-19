@@ -69,3 +69,5 @@ for product in arrayMatrix:
   newMatrix = chemistryUtils.convert(arrayMatrix[product], skipCols)
   nameFile = currentPath.joinpath('products').joinpath(str(product) + '.json')
   General.write_json(newMatrix,nameFile)
+
+print("Csv file parsed and exported correctly")
