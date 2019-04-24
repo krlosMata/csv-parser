@@ -2,6 +2,8 @@
 .vscode
 products
 productsParsed
+finalMatrix
+storage
 *.xlsx
 
 # Byte-compiled / optimized / DLL files

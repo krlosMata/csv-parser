@@ -13,6 +13,10 @@
 ---
 - [x] If a columns is empty, I skipped
 - [x] Variables should be same length among products
-- [ ] Matrix belongs to one specific time: time 0 --> Matrix of products and variables
+- [x] Matrix belongs to one specific time: time 0 --> Matrix of products and variables
 - [x] Get index of vectors than can be interpolated and then loop through it
 - [x] Vector X time --> Number if samples, incremental index by 1 --> then normalize
+---
+---
+- [ ] excelParser.py: - Delete skipColumns array
+                      - Insert by `argv` the name of the sheet

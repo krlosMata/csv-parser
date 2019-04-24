@@ -50,6 +50,8 @@ def normalizationVector(inputVec):
 def normVecSamples(inputVec):
   baseVec = range(0,len(inputVec))
   normElem = baseVec[len(baseVec)-1]
+  if normElem == 0:
+    normElem = 1
   output = [float(element/normElem) for element in baseVec]
   return output
 

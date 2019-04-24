@@ -43,18 +43,41 @@ for product in folderObject.iterdir():
   numMatrix = len(colX)-1
   break
 
-ultraMatrix = []
+## Sort files name by ascending order
+fileSort = []
+# Save all product names, type all float
+for product in folderObject.iterdir():
+  prStr = (product.name).replace('-final.json','')
+  fileSort.append(float(prStr))
+# Sort list ascending order
+fileSort.sort()
+# Build file list again
+fileList = [str(element).replace('.0','')+'-final.json' for element in fileSort]
 
-for index in range(0, numMatrix): ## For each timestamp, build a matrix
-  unitMatrix = []
-  for product in folderObject.iterdir(): ## For each product
-    productMatrix = General.read_json(product)
-    rowUnitMatrix = []
-    for i in range(1, len(productMatrix[0])): ## For each variable
-      colY = chemistryUtils.getColumn(productMatrix, i)
-      rowUnitMatrix.append(colY[index])
-    unitMatrix.append(rowUnitMatrix)
-  ultraMatrix.append(unitMatrix)
+
+
+## Build matrix sorted by number of product
+ultraMatrix = []
+for index in range(0, numMatrix + 1): ## For each timestamp, build a matrix
+  for product in fileList:
+    filePath = folderObject.joinpath(product)
+    rowMatrix = []
+    prName = product.replace('-final.json','')
+    prMatrix = General.read_json(filePath)
+    rowMatrix = prMatrix[index]
+    rowMatrix.insert(1, prName)
+    ultraMatrix.append(rowMatrix)
+
+## Build matrix sorted by time
+# ultraMatrix = []
+# for product in fileList:
+#   filePath = folderObject.joinpath(product)
+#   rowMatrix = []
+#   prName = product.replace('-final.json','') 
+#   prMatrix = General.read_json(filePath)
+#   for row in prMatrix:
+#     row.insert(1, prName)
+#     ultraMatrix.append(row)
 
 nameFile = destinyObject.joinpath('ultraMatrix.json')
 General.write_json(ultraMatrix,nameFile)

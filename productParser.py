@@ -38,9 +38,18 @@ destinyObject = Path(destinyPath)
 for product in folderObject.iterdir():
   ## get product name
   pr = (product.name).replace('.json','')
+  ## Skip products which contains any letter
+  try:
+    float(pr)
+  except:
+    continue
+
   FinalMatrix = []
   ArrayYVectors = []
   matrix = General.read_json(product)
+  ## Filter low samples
+  if len(matrix) < 3:
+    continue
   colX = chemistryUtils.getColumn(matrix, 0)
   colX = chemistryUtils.arrayToFloat(colX)
   normX = chemistryUtils.normVecSamples(colX) # Normalize X vector of time
