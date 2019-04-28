@@ -9,7 +9,7 @@ from pathlib import Path
 ###########################################
 sourceFile = sys.argv[1]
 nameSheet = sys.argv[2]
-columnSelected = sys.argv[3]
+columnSelected = int(sys.argv[3])
 destinyPath = sys.argv[4]
 
 ###########################################
