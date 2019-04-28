@@ -2,9 +2,6 @@ import sys, json, time, os
 from customApi import General
 from pathlib import Path
 
-###########################################
-################General####################
-###########################################
 def arrayToFloat(array):
   typeOf = type(array[0])
   if typeOf == type(''):
@@ -33,7 +30,6 @@ def getColumn(matrix, col):
     colData.append(element[col])  
   return colData
 
-
 ###########################################
 ############FUNCTIONS NORM#################
 ###########################################
@@ -55,7 +51,7 @@ def normVecSamples(inputVec):
   output = [float(element/normElem) for element in baseVec]
   return output
 
-def getTramo(x, tabla):
+def getStep(x, tabla):
   for i in range(len(tabla)-1):
     if (x >= tabla[i]['init']) and (x <= tabla[i+1]['init']):
       return i
@@ -66,12 +62,12 @@ def interpolation(tabla, step):
   xOut = [x/100 for x in xOut]
   yOut = []
   for x in xOut:
-    tramo = getTramo(x, tabla)
-    y = tabla[tramo]['pendiente']*x + tabla[tramo]['ordenada']  
+    tramo = getStep(x, tabla)
+    y = tabla[tramo]['m']*x + tabla[tramo]['n']  
     yOut.append(y)
   return xOut, yOut
 
-def getTabla(xVec, yVec):
+def getTable(xVec, yVec):
   tabla = []
   lenTramos = len(xVec) - 1
   tramos = range(1, lenTramos + 1)
@@ -83,8 +79,8 @@ def getTabla(xVec, yVec):
     n = yVec[i] - m * xVec[i]
     numTramo = i - 1
     elemTabla['numTramo'] = numTramo
-    elemTabla['pendiente'] = m
-    elemTabla['ordenada'] = n
+    elemTabla['m'] = m
+    elemTabla['n'] = n
     elemTabla['init'] = xVec[i-1]
     tabla.append(elemTabla)
   return tabla

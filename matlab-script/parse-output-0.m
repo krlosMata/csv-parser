@@ -1,7 +1,7 @@
 % Supose A = 500 x 11 matrix
 
 % Calculate Number of products and nuumber of variables
-lenX = 100;
+lenX = 100; % We supose normalization of 100 samples
 [Nprod,Nvar] = size(A);
 Nprod = Nprod / lenX;
 
